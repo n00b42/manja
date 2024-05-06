@@ -28,6 +28,7 @@ import org.thoughtcrime.securesms.components.ContactFilterView.OnFilterChangedLi
 import org.thoughtcrime.securesms.contacts.ContactSelectionDisplayMode;
 import org.thoughtcrime.securesms.contacts.SelectedContact;
 import org.thoughtcrime.securesms.groups.SelectionLimits;
+import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.mms.OutgoingMessage;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientId;
@@ -60,6 +61,7 @@ public class InviteActivity extends PassphraseRequiredActivity implements Contac
 
   @Override
   protected void onCreate(Bundle savedInstanceState, boolean ready) {
+    if(SignalStore.settings().getParentalLockEnabled()) { Toast.makeText(InviteActivity.this, R.string.preferences_privacy_advanced_parental__blocked, Toast.LENGTH_SHORT).show(); finish(); return; } // KIDS
     getIntent().putExtra(ContactSelectionListFragment.DISPLAY_MODE, ContactSelectionDisplayMode.FLAG_SMS);
     getIntent().putExtra(ContactSelectionListFragment.SELECTION_LIMITS, SelectionLimits.NO_LIMITS);
     getIntent().putExtra(ContactSelectionListFragment.HIDE_COUNT, true);

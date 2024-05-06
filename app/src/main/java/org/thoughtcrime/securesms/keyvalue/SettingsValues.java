@@ -66,6 +66,8 @@ public final class SettingsValues extends SignalStoreValues {
   private static final String CENSORSHIP_CIRCUMVENTION_ENABLED        = "settings.censorshipCircumventionEnabled";
   private static final String KEEP_MUTED_CHATS_ARCHIVED               = "settings.keepMutedChatsArchived";
   private static final String USE_COMPACT_NAVIGATION_BAR              = "settings.useCompactNavigationBar";
+  private static final String PARENTAL_LOCK_ENABLED                   = "settings.parentalLockEnabled"; // KIDS
+  private static final String PARENTAL_LOCK_PIN                       = "settings.parentalLockPin"; // KIDS
 
   public static final int BACKUP_DEFAULT_HOUR   = 2;
   public static final int BACKUP_DEFAULT_MINUTE = 0;
@@ -129,7 +131,9 @@ public final class SettingsValues extends SignalStoreValues {
                          UNIVERSAL_EXPIRE_TIMER,
                          SENT_MEDIA_QUALITY,
                          KEEP_MUTED_CHATS_ARCHIVED,
-                         USE_COMPACT_NAVIGATION_BAR);
+                         USE_COMPACT_NAVIGATION_BAR,
+                         PARENTAL_LOCK_ENABLED, // KIDS
+                         PARENTAL_LOCK_PIN); // KIDS
   }
 
   public @NonNull LiveData<String> getOnConfigurationSettingChanged() {
@@ -461,6 +465,24 @@ public final class SettingsValues extends SignalStoreValues {
   public boolean getUseCompactNavigationBar() {
     return getBoolean(USE_COMPACT_NAVIGATION_BAR, false);
   }
+
+  // KIDS
+  public void setParentalLockEnabled(boolean enabled) {
+    putBoolean(PARENTAL_LOCK_ENABLED, enabled);
+   }
+
+  public boolean getParentalLockEnabled() {
+    return getBoolean(PARENTAL_LOCK_ENABLED, false);
+   }
+
+  public void setParentalLockPin(@NonNull String pin) {
+    putString(PARENTAL_LOCK_PIN, pin);
+   }
+
+  public @NonNull String getParentalLockPin() {
+    return getString(PARENTAL_LOCK_PIN, "");
+   }
+  // KIDS
 
   private @Nullable Uri getUri(@NonNull String key) {
     String uri = getString(key, "");

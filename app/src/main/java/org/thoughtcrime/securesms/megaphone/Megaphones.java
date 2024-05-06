@@ -402,6 +402,7 @@ public final class Megaphones {
   }
 
   private static boolean shouldShowEnableAppUpdatesMegaphone(@NonNull Context context) {
+    if (SignalStore.settings().getParentalLockEnabled()) return false;
     return FeatureFlags.selfUpdater() &&
            !TextSecurePreferences.isUpdateApkEnabled(context) &&
            VersionTracker.getDaysSinceFirstInstalled(context) > 0;
@@ -459,6 +460,7 @@ public final class Megaphones {
   }
 
   private static boolean shouldShowDonateMegaphone(@NonNull Context context, @NonNull Event event, @NonNull Map<Event, MegaphoneRecord> records) {
+    if (SignalStore.settings().getParentalLockEnabled()) return false;
     long timeSinceLastDonatePrompt = timeSinceLastDonatePrompt(event, records);
 
     return timeSinceLastDonatePrompt > MIN_TIME_BETWEEN_DONATE_MEGAPHONES &&
@@ -466,6 +468,7 @@ public final class Megaphones {
   }
 
   private static boolean shouldShowOnboardingMegaphone(@NonNull Context context) {
+    if (SignalStore.settings().getParentalLockEnabled()) return false;
     return SignalStore.onboarding().hasOnboarding(context);
   }
 

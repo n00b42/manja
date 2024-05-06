@@ -280,8 +280,8 @@ public class ConversationListFragment extends MainFragment implements ActionMode
     pullView                = view.findViewById(R.id.pull_view);
     pullViewAppBarLayout    = view.findViewById(R.id.recycler_coordinator_app_bar);
 
-    fab.setVisibility(View.VISIBLE);
-    cameraFab.setVisibility(View.VISIBLE);
+    fab.setVisibility(SignalStore.settings().getParentalLockEnabled() ? View.GONE : View.VISIBLE); // KIDS
+    cameraFab.setVisibility(SignalStore.settings().getParentalLockEnabled() ? View.GONE : View.VISIBLE); // KIDS
 
     contactSearchMediator = new ContactSearchMediator(this,
                                                       Collections.emptySet(),
@@ -365,8 +365,10 @@ public class ConversationListFragment extends MainFragment implements ActionMode
       pullView.onUserDrag(progress);
     });
 
+    if(!SignalStore.settings().getParentalLockEnabled()) { // KIDS
     fab.show();
     cameraFab.show();
+    } // KIDS
 
     archiveDecoration = new ConversationListArchiveItemDecoration(new ColorDrawable(getResources().getColor(R.color.conversation_list_archive_background_end)));
     itemAnimator      = new ConversationListItemAnimator();
@@ -511,6 +513,8 @@ public class ConversationListFragment extends MainFragment implements ActionMode
 
     menu.findItem(R.id.menu_filter_unread_chats).setVisible(!isChatFilterEnabled);
     menu.findItem(R.id.menu_clear_unread_filter).setVisible(isChatFilterEnabled);
+    menu.findItem(R.id.menu_new_group).setVisible(!SignalStore.settings().getParentalLockEnabled()); // KIDS
+    menu.findItem(R.id.menu_invite).setVisible(!SignalStore.settings().getParentalLockEnabled()); // KIDS
   }
 
   @Override
@@ -1382,13 +1386,17 @@ public class ConversationListFragment extends MainFragment implements ActionMode
       startActionMode();
     }));
 
+    if(!SignalStore.settings().getParentalLockEnabled()) { // KIDS
     if (conversation.getThreadRecord().isArchived()) {
       items.add(new ActionItem(R.drawable.symbol_archive_up_24, getResources().getString(R.string.ConversationListFragment_unarchive), () -> handleArchive(id, false)));
     } else {
       items.add(new ActionItem(R.drawable.symbol_archive_24, getResources().getString(R.string.ConversationListFragment_archive), () -> handleArchive(id, false)));
     }
+    } // KIDS
 
+    if(!SignalStore.settings().getParentalLockEnabled()) { // KIDS
     items.add(new ActionItem(R.drawable.symbol_trash_24, getResources().getString(R.string.ConversationListFragment_delete), () -> handleDelete(id)));
+    } // KIDS
 
     activeContextMenu = new SignalContextMenu.Builder(view, list)
         .offsetX(ViewUtil.dpToPx(12))

@@ -8,8 +8,12 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.net.ConnectivityManager
 import android.text.SpannableStringBuilder
+import android.view.LayoutInflater // KIDS
+import android.widget.EditText // KIDS
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog // KIDS
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener // KIDS
 import androidx.lifecycle.ViewModelProvider
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.SignalProgressDialog
@@ -161,6 +165,53 @@ class AdvancedPrivacySettingsFragment : DSLSettingsFragment(R.string.preferences
       textPref(
         summary = DSLSettingsText.from(sealedSenderSummary)
       )
+
+      // KIDS
+      dividerPref()
+
+      sectionHeaderPref(R.string.preferences_privacy_advanced_parental)
+
+      switchPref(
+        title = DSLSettingsText.from(R.string.preferences_privacy_advanced_parental_lock),
+        summary = DSLSettingsText.from(R.string.preferences_privacy_advanced_parental_lock_description),
+        isChecked = state.parentalLockEnabled
+      ) {
+        val context = requireContext()
+        val builder = AlertDialog.Builder(context)
+        builder.setOnCancelListener { viewModel.refresh() }
+        val layout = LayoutInflater.from(context).inflate(R.layout.parental_lock_pin, null)
+        val editText = layout.findViewById<EditText>(R.id.parental_lock_pin_text)
+        builder.setView(layout)
+
+        if(state.parentalLockEnabled) {
+          // Ask PIN to disable
+          builder.setTitle("Enter PIN")
+          builder.setMessage("Enter parental PIN to disable parental lock.")
+          builder.setPositiveButton("Disable") { _, _ ->
+            if(editText.text.toString() == state.parentalLockPin) {
+              viewModel.setParentalLock(false, "")
+            } else {
+              Toast.makeText(context, "Incorrect PIN", Toast.LENGTH_SHORT).show()
+              viewModel.refresh()
+            }
+          }
+          builder.show()
+        } else {
+          // Ask new PIN
+          builder.setTitle("Set PIN")
+          builder.setMessage("Enter new parental PIN to enable parental lock.")
+          builder.setPositiveButton("Set") { _, _ ->
+            viewModel.setParentalLock(true, editText.text.toString())
+          }
+          val alertdialog = builder.show()
+          val positiveButton = alertdialog.getButton(AlertDialog.BUTTON_POSITIVE)
+          positiveButton.setEnabled(false)
+          editText.addTextChangedListener(afterTextChanged = {
+            positiveButton.setEnabled((editText.length() >= 4))
+          })
+        }
+      }
+      // KIDS
     }
   }
 

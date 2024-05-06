@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast // KIDS
 import androidx.core.app.ActivityCompat
 import androidx.core.view.MenuProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -29,6 +30,7 @@ class NewCallActivity : ContactSelectionActivity(), ContactSelectionListFragment
 
   override fun onCreate(icicle: Bundle?, ready: Boolean) {
     super.onCreate(icicle, ready)
+    if(SignalStore.settings().getParentalLockEnabled()) { Toast.makeText(this, R.string.preferences_privacy_advanced_parental__blocked, Toast.LENGTH_SHORT).show(); finish(); return; } // KIDS
     requireNotNull(supportActionBar)
     supportActionBar?.setTitle(R.string.NewCallActivity__new_call)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
