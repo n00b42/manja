@@ -49,7 +49,7 @@ val signalJavaVersion: JavaVersion by rootProject.extra
 val signalKotlinJvmTarget: String by rootProject.extra
 
 // Override build config via env vars when project property 'CI' is set
-val ciEnabled = project.hasProperty("CI")
+val ciEnabled = false // project.hasProperty("CI")
 
 val baseAppTitle = getCiEnv("CI_APP_TITLE") ?: properties["baseAppTitle"] as String
 val baseAppFileName = getCiEnv("CI_APP_FILENAME") ?: properties["baseAppFileName"] as String
@@ -145,7 +145,7 @@ android {
   }
 
   if (mollyRevision < 0 || mollyRevision >= postFixSize) {
-    throw GradleException("Molly revision $mollyRevision out of range")
+    throw GradleException("Manja revision $mollyRevision out of range")
   }
 
   defaultConfig {

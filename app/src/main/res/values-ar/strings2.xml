@@ -75,7 +75,7 @@
     <string name="DozeReminder_optimize_for_timely_notifications">تحسين الإشعارات في الوقت المناسب</string>
     <string name="arrays__weekly">أسبوعيًا</string>
     <string name="MessageRetrievalService_ready_to_receive_messages">جاهز لتلقي الرسائل</string>
-    <string name="HelpSettingsFragment__molly_im_website">موقع Molly.im</string>
+    <string name="HelpSettingsFragment__molly_im_website">موقع Manja.im</string>
     <string name="DeviceAddFragment__link_without_scanning">ربط دون المسح</string>
     <string name="BiometricDialogFragment__biometric_verification">التحقق البيومتري</string>
     <string name="BiometricDialogFragment__please_confirm_it_is_really_you_to_access_molly">يُرجى التأكد من أنك أنت من تستخدم مولي حقًا</string>
