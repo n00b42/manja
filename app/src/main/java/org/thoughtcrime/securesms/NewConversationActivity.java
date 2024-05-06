@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast; // KIDS
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -89,6 +90,7 @@ public class NewConversationActivity extends ContactSelectionActivity
   @Override
   public void onCreate(Bundle bundle, boolean ready) {
     super.onCreate(bundle, ready);
+    if(SignalStore.settings().getParentalLockEnabled()) { Toast.makeText(NewConversationActivity.this, R.string.preferences_privacy_advanced_parental__blocked, Toast.LENGTH_SHORT).show(); finish(); return; } // KIDS
     assert getSupportActionBar() != null;
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setTitle(R.string.NewConversationActivity__new_message);

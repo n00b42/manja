@@ -34,6 +34,7 @@ import org.thoughtcrime.securesms.contacts.avatars.FallbackContactPhoto;
 import org.thoughtcrime.securesms.contacts.avatars.FallbackPhoto80dp;
 import org.thoughtcrime.securesms.fonts.SignalSymbols;
 import org.thoughtcrime.securesms.groups.GroupId;
+import org.thoughtcrime.securesms.keyvalue.SignalStore; // KIDS
 import org.thoughtcrime.securesms.nicknames.NicknameActivity;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientExporter;
@@ -336,6 +337,7 @@ public final class RecipientBottomSheetDialogFragment extends BottomSheetDialogF
 
     viewModel.getIdentity().observe(getViewLifecycleOwner(), identityRecord -> {
       if (identityRecord != null) {
+        if(SignalStore.settings().getParentalLockEnabled()) return; // KIDS
         viewSafetyNumberButton.setVisibility(View.VISIBLE);
         viewSafetyNumberButton.setOnClickListener(view -> {
           dismiss();

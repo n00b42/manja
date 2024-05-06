@@ -1,9 +1,11 @@
 package org.thoughtcrime.securesms.components.settings.app.privacy.advanced
 
+import android.content.DialogInterface // KIDS
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AlertDialog // KIDS
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
@@ -62,6 +64,15 @@ class AdvancedPrivacySettingsViewModel(
     refresh()
   }
 
+  // KIDS
+  fun setParentalLock(enabled: Boolean, pin: String) {
+    SignalStore.settings().setParentalLockEnabled(enabled)
+    SignalStore.settings().setParentalLockPin(pin)
+    SignalStore.storyValues().isFeatureDisabled = true
+    refresh()
+  }
+  // KIDS
+
   fun refresh() {
     store.update { getState().copy(showProgressSpinner = it.showProgressSpinner) }
   }
@@ -85,6 +96,8 @@ class AdvancedPrivacySettingsViewModel(
       allowSealedSenderFromAnyone = TextSecurePreferences.isUniversalUnidentifiedAccess(
         ApplicationDependencies.getApplication()
       ),
+      parentalLockEnabled = SignalStore.settings().getParentalLockEnabled(), // KIDS
+      parentalLockPin = SignalStore.settings().getParentalLockPin(), // KIDS
       false
     )
   }

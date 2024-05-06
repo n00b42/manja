@@ -60,6 +60,7 @@ public class InviteActivity extends PassphraseRequiredActivity implements Contac
 
   @Override
   protected void onCreate(Bundle savedInstanceState, boolean ready) {
+    if(SignalStore.settings().getParentalLockEnabled()) { Toast.makeText(InviteActivity.this, R.string.preferences_privacy_advanced_parental__blocked, Toast.LENGTH_SHORT).show(); finish(); return; } // KIDS
     getIntent().putExtra(ContactSelectionListFragment.DISPLAY_MODE, ContactSelectionDisplayMode.FLAG_SMS);
     getIntent().putExtra(ContactSelectionListFragment.SELECTION_LIMITS, SelectionLimits.NO_LIMITS);
     getIntent().putExtra(ContactSelectionListFragment.HIDE_COUNT, true);

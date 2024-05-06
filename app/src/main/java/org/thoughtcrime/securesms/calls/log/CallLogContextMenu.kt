@@ -13,6 +13,7 @@ import org.thoughtcrime.securesms.components.menu.SignalContextMenu
 import org.thoughtcrime.securesms.components.settings.conversation.ConversationSettingsActivity
 import org.thoughtcrime.securesms.conversation.ConversationIntents
 import org.thoughtcrime.securesms.database.CallTable
+import org.thoughtcrime.securesms.keyvalue.SignalStore // KIDS
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.util.CommunicationActions
 
@@ -117,7 +118,8 @@ class CallLogContextMenu(
     }
   }
 
-  private fun getSelectActionItem(call: CallLogRow): ActionItem {
+  private fun getSelectActionItem(call: CallLogRow): ActionItem? { // KIDS
+    if (SignalStore.settings().getParentalLockEnabled()) return null; // KIDS
     return ActionItem(
       iconRes = R.drawable.symbol_check_circle_24,
       title = fragment.getString(R.string.CallContextMenu__select)
@@ -127,6 +129,7 @@ class CallLogContextMenu(
   }
 
   private fun getDeleteActionItem(call: CallLogRow): ActionItem? {
+    if (SignalStore.settings().getParentalLockEnabled()) return null; // KIDS
     if (call is CallLogRow.Call && call.record.event == CallTable.Event.ONGOING) {
       return null
     }

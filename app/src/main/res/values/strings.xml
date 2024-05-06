@@ -3306,6 +3306,12 @@
     <!-- Preference summary for compact navigation bar size -->
     <string name="preferences_compact">Compact</string>
 
+    <!-- KIDS -->
+    <string name="preferences_privacy_advanced_parental">Parental controls</string>
+    <string name="preferences_privacy_advanced_parental_lock">Enable parental lock</string>
+    <string name="preferences_privacy_advanced_parental_lock_description">Parental PIN that is asked if a new contact is requrested. Should be kept secret from the child.</string>
+    <string name="preferences_privacy_advanced_parental__blocked">This action was blocked by parental lock.</string>
+    <!-- /KIDS -->
 
     <string name="configurable_single_select__customize_option">Customize option</string>
 

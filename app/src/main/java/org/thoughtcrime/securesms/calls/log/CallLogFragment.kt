@@ -56,6 +56,7 @@ import org.thoughtcrime.securesms.conversationlist.chatfilter.FilterLerp
 import org.thoughtcrime.securesms.conversationlist.chatfilter.FilterPullState
 import org.thoughtcrime.securesms.databinding.CallLogFragmentBinding
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
+import org.thoughtcrime.securesms.keyvalue.SignalStore // KIDS
 import org.thoughtcrime.securesms.main.Material3OnScrollHelperBinder
 import org.thoughtcrime.securesms.main.SearchBinder
 import org.thoughtcrime.securesms.recipients.Recipient
@@ -101,7 +102,7 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
       val isFiltered = viewModel.filterSnapshot == CallLogFilter.MISSED
       menu.findItem(R.id.action_clear_missed_call_filter).isVisible = isFiltered
       menu.findItem(R.id.action_filter_missed_calls).isVisible = !isFiltered
-      menu.findItem(R.id.action_clear_call_history).isVisible = !viewModel.isEmpty
+      menu.findItem(R.id.action_clear_call_history).isVisible = !viewModel.isEmpty && !SignalStore.settings().getParentalLockEnabled() // KIDS
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -168,6 +169,7 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
     binding.fab.setOnClickListener {
       startActivity(NewCallActivity.createIntent(requireContext()))
     }
+    binding.fab.visible = !SignalStore.settings().getParentalLockEnabled() // KIDS
 
     binding.pullView.setPillText(R.string.CallLogFragment__filtered_by_missed)
 
@@ -517,7 +519,7 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
     override fun onActionModeWillEnd() {
       requireListener<Callback>().onMultiSelectFinished()
       signalBottomActionBarController.setVisibility(false)
-      binding.fab.visible = true
+      binding.fab.visible = !SignalStore.settings().getParentalLockEnabled() // KIDS
     }
 
     override fun getResources(): Resources = resources

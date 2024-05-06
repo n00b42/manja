@@ -8,6 +8,8 @@ data class AdvancedPrivacySettingsState(
   val censorshipCircumventionEnabled: Boolean,
   val showSealedSenderStatusIcon: Boolean,
   val allowSealedSenderFromAnyone: Boolean,
+  val parentalLockEnabled: Boolean, // KIDS
+  val parentalLockPin: String, // KIDS
   val showProgressSpinner: Boolean
 )
 

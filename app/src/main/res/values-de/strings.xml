@@ -3305,6 +3305,12 @@
     <!-- Preference summary for compact navigation bar size -->
     <string name="preferences_compact">Kompakt</string>
 
+    <!-- KIDS -->
+    <string name="preferences_privacy_advanced_parental">Elterliche Kontrolle</string>
+    <string name="preferences_privacy_advanced_parental_lock">Aktiviere elterliche Sperre</string>
+    <string name="preferences_privacy_advanced_parental_lock_description">PIN um die elterliche Sperre wieder aufzuheben.</string>
+    <string name="preferences_privacy_advanced_parental__blocked">Diese Aktion wurde von der elterlichen Sperre untersagt.</string>
+    <!-- /KIDS -->
 
     <string name="configurable_single_select__customize_option">Option anpassen</string>
 

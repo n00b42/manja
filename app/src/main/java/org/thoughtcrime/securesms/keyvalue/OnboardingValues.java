@@ -50,6 +50,7 @@ public final class OnboardingValues extends SignalStoreValues {
   }
 
   public boolean shouldShowStories(){
+    if (SignalStore.settings().getParentalLockEnabled()) return false;
     return getBoolean(SHOW_STORIES, false);
   }
 
@@ -58,6 +59,7 @@ public final class OnboardingValues extends SignalStoreValues {
   }
 
   public boolean shouldShowInviteFriends() {
+    if (SignalStore.settings().getParentalLockEnabled()) return false;
     return getBoolean(SHOW_INVITE_FRIENDS, false);
   }
 
